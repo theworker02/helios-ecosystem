@@ -1,87 +1,63 @@
-# Helios Ecosystem 1.3.8
+# Helios Ecosystem 1.4.0
 
 ![Helios](./assets/helios-logo.svg)
 
-**Helios is an AI-native game engine built to be driven by ChatGPT, MCP agents, local clients, and conventional front ends.**
+**Helios is an AI-native game engine built for ChatGPT, MCP agents, local clients, and conventional renderers.**
 
-Version **1.3.8** moves Helios well beyond a conversational state demo. The repository now contains a deterministic runtime with scenes, ECS-style entities/components, input frames, events, rules, agent capability gates, saves/checkpoints, 20 first-party modules, and a retro-FPS subsystem capable of building and playing **Doom-style** worlds.
+v1.4.0 deepens Helios from a retro-FPS foundation into a playable game runtime: enemies, A* navigation, health/armor, ammo, hitscan combat, pickups, interactive doors, deterministic replay logs, HUD state, resource-pack manifests, scenes, ECS-style entities, agent capability gates, rules, checkpoints, and 20 first-party modules.
 
-Helios does **not** redistribute Doom, proprietary WADs, textures, sounds, maps, or other copyrighted game data. The included WAD reader is for user-supplied files the user is legally entitled to use.
+## Playable retro-FPS loop
 
-## What Helios can do
-
-- Create and persist multiple game worlds.
-- Create scenes and spawn component-based entities.
-- Query and patch entity components.
-- Install first-party or community modules.
-- Advance deterministic simulation ticks.
-- Attach AI agents to entities with explicit action capabilities.
-- Give agents bounded observations instead of unrestricted world access.
-- Apply natural-language-authored structured rules.
-- Save, checkpoint, export and import worlds.
-- Create grid-based first-person levels and run collision-aware movement.
-- Ray-cast retro-FPS frames and render them as structured data or ASCII directly in chat.
-- Inspect classic Doom IWAD/PWAD directories and basic map geometry from user-supplied local files.
-- Expose the engine through MCP so ChatGPT can operate it through tools rather than merely improvising state.
-
-## Retro FPS quick example
-
-A map is intentionally simple:
+A map can now contain:
 
 ```text
-############
-#..........#
-#..###.....#
-#.....P....#
-#..........#
-############
+################
+#P....A........#
+#..####...E....#
+#..............#
+#...D..........#
+#........+.....#
+#......E.......#
+################
 ```
 
-ChatGPT can configure that as a world, apply player input, tick the simulation, and request a ray-cast frame. See [examples/retro-fps](./examples/retro-fps).
+Symbols: `P` player, `E` enemy, `A` ammo, `+` health, `D` door, `#` wall.
 
-## Projects
+ChatGPT can create the world, move/turn the player, tick enemies, fire a weapon, open doors, collect pickups, read the HUD, render a ray-cast frame, checkpoint, save and export a replay.
 
-| Project | Purpose |
-|---|---|
-| **Helios Core** | Deterministic runtime, MCP interface, saves, scenes, ECS-style entities, rules, agents, retro FPS and WAD inspection. |
-| **Aether Agents** | Autonomous NPC brains, goals, memories, observations and capability-gated actions. |
-| **Echo Dialogue** | Dialogue and conversation state. |
-| **Pulse Combat** | Combat resolution and encounter hooks. |
-| **Vault Inventory** | Items, equipment and containers. |
-| **Forge Crafting** | Recipes and production. |
-| **Loom Quests** | Objectives and quest graphs. |
-| **Bazaar Economy** | Currency, prices and trading. |
-| **Faction Grid** | Reputation, factions and diplomacy. |
-| **Vitae Survival** | Health and survival pressures. |
-| **Atlas Worlds** | Locations and world generation primitives. |
-| **Nimbus Weather** | Weather and environment events. |
-| **Drift Vehicles** | Vehicles and traversal. |
-| **Hearth Building** | Structures and settlements. |
-| **Chronicle State** | Persistence and state history. |
-| **Spectra UI** | Renderer-neutral HUD schemas. |
-| **Resonance Audio** | Adaptive audio intents. |
-| **Relay Multiplayer** | Session and synchronization primitives. |
-| **Oracle Director** | AI director/game-master hooks. |
-| **Keystone Physics** | Spatial and collision primitives. |
-| **Spark SDK** | Third-party module contract and tooling. |
+## Major engine layers
 
-## Run tests
+- deterministic world/tick runtime
+- ECS-style entities/components/tags
+- scenes and active-scene switching
+- structured events and declarative rules
+- deterministic RNG
+- capability-gated AI agents
+- A* pathfinding and line-of-sight
+- retro-FPS movement/collision/raycasting
+- enemies, combat, pickups and doors
+- HUD/gameplay state
+- resource-pack manifests
+- replay/input logs
+- checkpoints and versioned saves
+- MCP tool surface for ChatGPT
+- classic Doom IWAD/PWAD metadata/geometry inspection for user-supplied files
+- 20 first-party gameplay/developer modules
+
+## Doom-style support
+
+Helios can run original Doom-like gameplay and inspect classic Doom WAD structure supplied by the user. It does not bundle or redistribute Doom, original WADs, maps, textures, sounds or other proprietary assets.
+
+It is still not claiming exact source-port compatibility. Exact Doom BSP rendering, texture compositing, sector specials, thinkers, sprite animation and compatibility quirks remain future work.
+
+## Run
 
 ```bash
 python -m pytest -q
-```
-
-## MCP server
-
-```bash
 python core/helios-chatgpt/server/mcp_server.py
 ```
 
-The MCP tool surface includes world/scene creation, entity operations, module installation, rules, input/ticking, agent attachment/observation/action, retro-FPS setup/rendering, saves and WAD inspection.
-
-## Reality check
-
-Helios can now run a **Doom-like retro FPS simulation**, and it can inspect geometry from classic Doom-format WADs supplied by the user. It is not yet a drop-in replacement for a mature Doom source port: exact BSP rendering, texture composition, specials, full thinker/gameplay compatibility and original asset playback remain additional compatibility work.
+See `docs/gameplay.md`, `docs/architecture.md`, and `examples/retro-fps/`.
 
 ## License
 

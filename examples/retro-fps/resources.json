@@ -1,0 +1,11 @@
+{
+  "schema": "helios.resources/v1",
+  "id": "retro-example",
+  "name": "Retro FPS Example Resources",
+  "version": "1.0.0",
+  "assets": [
+    {"id":"wall-stone","kind":"material","source":"procedural:stone"},
+    {"id":"pistol","kind":"weapon","source":"builtin:pistol"},
+    {"id":"enemy-basic","kind":"entity-archetype","source":"builtin:enemy"}
+  ]
+}
