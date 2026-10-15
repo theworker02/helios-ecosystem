@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "vault-inventory",
+  "name": "Vault Inventory",
+  "version": "0.1.0",
+  "description": "Items, containers, equipment slots, stack rules, ownership, transfers, loot, and inventories.",
+  "category": "inventory",
+  "entrypoint": "module.py",
+  "state_namespace": "vault-inventory",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "inventory"
+  ]
+}
