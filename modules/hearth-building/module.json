@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "hearth-building",
+  "name": "Hearth Building",
+  "version": "0.1.0",
+  "description": "Construction, structures, rooms, placement, upgrades, utilities, ownership, and settlement state.",
+  "category": "building",
+  "entrypoint": "module.py",
+  "state_namespace": "hearth-building",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "building"
+  ]
+}
