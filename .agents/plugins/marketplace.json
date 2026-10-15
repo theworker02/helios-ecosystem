@@ -1,0 +1,20 @@
+{
+  "name": "magnexis-game-tools",
+  "interface": {
+    "displayName": "Magnexis Game Tools"
+  },
+  "plugins": [
+    {
+      "name": "helios-game-engine",
+      "source": {
+        "source": "local",
+        "path": "./plugins/helios"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
