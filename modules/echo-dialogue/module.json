@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "echo-dialogue",
+  "name": "Echo Dialogue",
+  "version": "0.1.0",
+  "description": "Branching and agent-driven dialogue, relationship context, conversation memory, and dialogue events.",
+  "category": "dialogue",
+  "entrypoint": "module.py",
+  "state_namespace": "echo-dialogue",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "dialogue"
+  ]
+}
