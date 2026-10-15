@@ -1,10 +1,25 @@
-# Helios Ecosystem 1.4.0
+# Helios Ecosystem 1.5.0
 
 ![Helios](./assets/helios-logo.svg)
 
 **Helios is an AI-native game engine built for ChatGPT, MCP agents, local clients, and conventional renderers.**
 
-v1.4.0 deepens Helios from a retro-FPS foundation into a playable game runtime: enemies, A* navigation, health/armor, ammo, hitscan combat, pickups, interactive doors, deterministic replay logs, HUD state, resource-pack manifests, scenes, ECS-style entities, agent capability gates, rules, checkpoints, and 20 first-party modules.
+v1.4.0 deepened Helios from a retro-FPS foundation into a playable game runtime: enemies, A* navigation, health/armor, ammo, hitscan combat, pickups, interactive doors, deterministic replay logs, HUD state, resource-pack manifests, scenes, ECS-style entities, agent capability gates, rules, checkpoints, and 20 first-party modules.
+
+## Helios Forge Studio (new in 1.5)
+
+Helios Forge adds a **multi-genre game-authoring and playing layer**, powered by the same deterministic Helios Core runtime. Available prototypes: \`roguelike\`, \`topdown\`, \`sandbox\` and \`platformer\`. Create seeded maps, paint tiles, place enemies/loot/dialogue NPCs/goals, fight, jump, collect, export/import and use MCP to control worlds.
+
+A local **HTML5 Canvas game editor** uses an HTTP bridge to Helios Python rather than implementing a divergent JavaScript simulation:
+
+\`\`\`bash
+python core/helios-chatgpt/server/studio_server.py
+# Visit http://127.0.0.1:8787
+\`\`\`
+
+This reference server is **loopback-only**: it is not ready for public deployment. ChatGPT MCP connection still requires installing/hosting an accessible tool integration; adding source code here alone does not make it available to every ChatGPT account.
+
+See [Forge guide](docs/forge.md) for the exact seven MCP tools, supported mechanics and limitations.
 
 ## Playable retro-FPS loop
 

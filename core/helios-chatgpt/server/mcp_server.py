@@ -1,4 +1,4 @@
-"""Helios 1.4.0 MCP stdio server."""
+"""Helios 1.5.0 MCP stdio server."""
 from __future__ import annotations
 import json, os, sys
 from engine import HeliosEngine, ENGINE_VERSION
@@ -32,6 +32,13 @@ TOOLS=[
 {"name":"helios_export_world","description":"Export portable world JSON.","inputSchema":obj({"world_id":S},["world_id"])},
 {"name":"helios_import_world","description":"Import portable world JSON.","inputSchema":obj({"json":S},["json"])},
 {"name":"helios_export_replay","description":"Export deterministic input/action replay JSON.","inputSchema":obj({"world_id":S},["world_id"])},
+{"name":"helios_forge_new","description":"Start an editable playable Forge project (roguelike, topdown, platformer or sandbox).","inputSchema":obj({"world_id":S,"name":S,"genre":S,"seed":I,"width":I,"height":I},["world_id","name"])},
+{"name":"helios_forge_edit","description":"Paint one tile: # wall, . floor or ^ hazard.","inputSchema":obj({"world_id":S,"x":I,"y":I,"tile":S},["world_id","x","y","tile"])},
+{"name":"helios_forge_place","description":"Place an enemy, loot, goal or dialogue NPC on an empty floor tile.","inputSchema":obj({"world_id":S,"actor_id":S,"kind":S,"x":I,"y":I,"hp":I,"value":I,"dialogue":S},["world_id","actor_id","kind","x","y"])},
+{"name":"helios_forge_play","description":"Play a grid turn or advance platformer physics frames. Grid: north/south/east/west/attack/wait. Platformer: left/right/jump/left+jump/right+jump/stop/wait.","inputSchema":obj({"world_id":S,"action":S,"frames":I},["world_id","action"])},
+{"name":"helios_forge_render","description":"Render Forge ASCII tiles, entities and gameplay HUD for an in-chat view.","inputSchema":obj({"world_id":S},["world_id"])},
+{"name":"helios_forge_export","description":"Export the authored portable helios.forge/v1 project JSON.","inputSchema":obj({"world_id":S},["world_id"])},
+{"name":"helios_forge_import","description":"Import validated portable helios.forge/v1 project JSON into a world.","inputSchema":obj({"world_id":S,"json":S},["world_id","json"])},
 {"name":"helios_inspect_wad","description":"Inspect a user-supplied classic Doom IWAD/PWAD. No copyrighted WAD content is supplied.","inputSchema":obj({"path":S,"map_name":S},["path"])}
 ]
 def ok(i,r): return {"jsonrpc":"2.0","id":i,"result":r}
@@ -69,6 +76,13 @@ def dispatch(q):
         elif n=="helios_export_world": r={"json":engine.export_world(a["world_id"])}
         elif n=="helios_import_world": r=engine.import_world(a["json"])
         elif n=="helios_export_replay": r={"json":engine.export_replay(a["world_id"])}
+        elif n=="helios_forge_new": r=engine.forge_new(a["world_id"],a["name"],a.get("genre","roguelike"),a.get("seed",0),a.get("width",24),a.get("height",16))
+        elif n=="helios_forge_edit": r=engine.forge_edit(a["world_id"],a["x"],a["y"],a["tile"])
+        elif n=="helios_forge_place": r=engine.forge_place(a["world_id"],a["actor_id"],a["kind"],a["x"],a["y"],a.get("hp",35),a.get("value",10),a.get("dialogue",""))
+        elif n=="helios_forge_play": r=engine.forge_play(a["world_id"],a["action"],a.get("frames",1))
+        elif n=="helios_forge_render": r=engine.forge_render(a["world_id"])
+        elif n=="helios_forge_export": r={"json":engine.forge_export(a["world_id"])}
+        elif n=="helios_forge_import": r=engine.forge_import(a["world_id"],a["json"])
         elif n=="helios_inspect_wad":
             wad=WadFile(os.path.abspath(a["path"])); r=wad.map_geometry(a["map_name"]) if a.get("map_name") else wad.summary()
         else: raise ValueError("unknown tool")
