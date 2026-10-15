@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "nimbus-weather",
+  "name": "Nimbus Weather",
+  "version": "0.1.0",
+  "description": "Weather states, climate transitions, time-of-day modifiers, hazards, and environment events.",
+  "category": "weather",
+  "entrypoint": "module.py",
+  "state_namespace": "nimbus-weather",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "weather"
+  ]
+}
