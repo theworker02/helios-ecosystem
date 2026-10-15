@@ -155,6 +155,40 @@ class ForgeStudio:
                 or not _passable(project, actor["x"], actor["y"])):
                 raise ValueError("invalid or duplicate Forge actor")
             ids.add(actor["id"])
+        # Imported projects are untrusted: validate all fields consumed by play
+        # and render rather than accepting an incomplete v1-shaped dictionary.
+        if (not isinstance(project.get("name"), str) or len(project["name"]) > 120
+            or type(project.get("seed")) is not int or
+            type(project.get("turn")) is not int or project["turn"] < 0 or
+            type(project.get("completed")) is not bool):
+            raise ValueError("invalid Forge project metadata")
+        if (type(p.get("grounded")) is not bool
+            or not isinstance(p.get("inventory"), list)
+            or len(p["inventory"]) > 512
+            or any(not isinstance(item, str) or len(item) > 80 for item in p["inventory"])):
+            raise ValueError("invalid Forge player inventory or physics state")
+        for k in ("vx", "vy"):
+            if not isinstance(p.get(k), (int, float)) or not math.isfinite(p[k]) or abs(p[k]) > 100:
+                raise ValueError("invalid Forge player velocity")
+        if not 0 <= p["health"] <= 10000 or not 0 <= p["score"] <= 1_000_000_000:
+            raise ValueError("invalid Forge health or score")
+        for actor in actors:
+            if type(actor.get("active")) is not bool:
+                raise ValueError("invalid Forge actor state")
+            if actor["kind"] == "enemy" and (
+                type(actor.get("hp")) is not int or not -10000 <= actor["hp"] <= 10000):
+                raise ValueError("invalid Forge enemy health")
+            if actor["kind"] == "loot" and (
+                type(actor.get("value")) is not int or not 1 <= actor["value"] <= 10000):
+                raise ValueError("invalid Forge loot amount")
+            if actor["kind"] == "npc" and (
+                not isinstance(actor.get("dialogue"), str) or len(actor["dialogue"]) > 500):
+                raise ValueError("invalid Forge dialogue")
+        events = project.get("events")
+        if (not isinstance(events, list) or len(events) > 100
+            or any(not isinstance(e, dict) or not isinstance(e.get("type"), str)
+                   or len(e["type"]) > 120 for e in events)):
+            raise ValueError("invalid Forge event history")
         return copy.deepcopy(project)
 
     @staticmethod
