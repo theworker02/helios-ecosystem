@@ -1,166 +1,148 @@
 {
   "name": "Helios Ecosystem",
-  "version": "0.1.0",
+  "version": "1.3.8",
+  "engine_version": "1.3.8",
+  "schema": "helios.registry/v1",
   "modules": [
     {
       "id": "aether-agents",
       "name": "Aether Agents",
-      "description": "Autonomous NPC brains with goals, memories, observations, capability-gated actions, and pluggable agent policies.",
-      "category": "agent",
-      "version": "0.1.0",
-      "path": "modules/aether-agents"
+      "version": "1.3.8",
+      "path": "modules/aether-agents",
+      "engine_min": "1.3.8"
     },
     {
       "id": "echo-dialogue",
       "name": "Echo Dialogue",
-      "description": "Branching and agent-driven dialogue, relationship context, conversation memory, and dialogue events.",
-      "category": "dialogue",
-      "version": "0.1.0",
-      "path": "modules/echo-dialogue"
+      "version": "1.3.8",
+      "path": "modules/echo-dialogue",
+      "engine_min": "1.3.8"
     },
     {
       "id": "pulse-combat",
       "name": "Pulse Combat",
-      "description": "Turn-based combat resolution with stats, damage types, status effects, targeting, and encounter hooks.",
-      "category": "combat",
-      "version": "0.1.0",
-      "path": "modules/pulse-combat"
+      "version": "1.3.8",
+      "path": "modules/pulse-combat",
+      "engine_min": "1.3.8"
     },
     {
       "id": "vault-inventory",
       "name": "Vault Inventory",
-      "description": "Items, containers, equipment slots, stack rules, ownership, transfers, loot, and inventories.",
-      "category": "inventory",
-      "version": "0.1.0",
-      "path": "modules/vault-inventory"
+      "version": "1.3.8",
+      "path": "modules/vault-inventory",
+      "engine_min": "1.3.8"
     },
     {
       "id": "forge-crafting",
       "name": "Forge Crafting",
-      "description": "Recipes, ingredients, tools, stations, crafting queues, quality, and production events.",
-      "category": "crafting",
-      "version": "0.1.0",
-      "path": "modules/forge-crafting"
+      "version": "1.3.8",
+      "path": "modules/forge-crafting",
+      "engine_min": "1.3.8"
     },
     {
       "id": "loom-quests",
       "name": "Loom Quests",
-      "description": "Objectives, quest graphs, prerequisites, branching outcomes, rewards, and progression tracking.",
-      "category": "quests",
-      "version": "0.1.0",
-      "path": "modules/loom-quests"
+      "version": "1.3.8",
+      "path": "modules/loom-quests",
+      "engine_min": "1.3.8"
     },
     {
       "id": "bazaar-economy",
       "name": "Bazaar Economy",
-      "description": "Currencies, shops, pricing, scarcity, trade, inventories, and configurable market simulation.",
-      "category": "economy",
-      "version": "0.1.0",
-      "path": "modules/bazaar-economy"
+      "version": "1.3.8",
+      "path": "modules/bazaar-economy",
+      "engine_min": "1.3.8"
     },
     {
       "id": "faction-grid",
       "name": "Faction Grid",
-      "description": "Factions, membership, reputation, diplomacy, hostility, alliances, territory claims, and social state.",
-      "category": "factions",
-      "version": "0.1.0",
-      "path": "modules/faction-grid"
+      "version": "1.3.8",
+      "path": "modules/faction-grid",
+      "engine_min": "1.3.8"
     },
     {
       "id": "vitae-survival",
       "name": "Vitae Survival",
-      "description": "Health, hunger, thirst, fatigue, temperature, disease, injury, recovery, and survival pressure.",
-      "category": "survival",
-      "version": "0.1.0",
-      "path": "modules/vitae-survival"
+      "version": "1.3.8",
+      "path": "modules/vitae-survival",
+      "engine_min": "1.3.8"
     },
     {
       "id": "atlas-worlds",
       "name": "Atlas Worlds",
-      "description": "World, region, scene, biome, location, travel, and procedural world-generation primitives.",
-      "category": "worlds",
-      "version": "0.1.0",
-      "path": "modules/atlas-worlds"
+      "version": "1.3.8",
+      "path": "modules/atlas-worlds",
+      "engine_min": "1.3.8"
     },
     {
       "id": "nimbus-weather",
       "name": "Nimbus Weather",
-      "description": "Weather states, climate transitions, time-of-day modifiers, hazards, and environment events.",
-      "category": "weather",
-      "version": "0.1.0",
-      "path": "modules/nimbus-weather"
+      "version": "1.3.8",
+      "path": "modules/nimbus-weather",
+      "engine_min": "1.3.8"
     },
     {
       "id": "drift-vehicles",
       "name": "Drift Vehicles",
-      "description": "Vehicles, fuel, cargo, seats, durability, traversal costs, routes, and vehicle actions.",
-      "category": "vehicles",
-      "version": "0.1.0",
-      "path": "modules/drift-vehicles"
+      "version": "1.3.8",
+      "path": "modules/drift-vehicles",
+      "engine_min": "1.3.8"
     },
     {
       "id": "hearth-building",
       "name": "Hearth Building",
-      "description": "Construction, structures, rooms, placement, upgrades, utilities, ownership, and settlement state.",
-      "category": "building",
-      "version": "0.1.0",
-      "path": "modules/hearth-building"
+      "version": "1.3.8",
+      "path": "modules/hearth-building",
+      "engine_min": "1.3.8"
     },
     {
       "id": "chronicle-state",
       "name": "Chronicle State",
-      "description": "Save games, checkpoints, snapshots, rollback-safe histories, migrations, and portable world persistence.",
-      "category": "state",
-      "version": "0.1.0",
-      "path": "modules/chronicle-state"
+      "version": "1.3.8",
+      "path": "modules/chronicle-state",
+      "engine_min": "1.3.8"
     },
     {
       "id": "spectra-ui",
-      "name": "Spectra UI",
-      "description": "Declarative HUDs, panels, menus, meters, interaction prompts, and renderer-neutral presentation schemas.",
-      "category": "ui",
-      "version": "0.1.0",
-      "path": "modules/spectra-ui"
+      "name": "Spectra Ui",
+      "version": "1.3.8",
+      "path": "modules/spectra-ui",
+      "engine_min": "1.3.8"
     },
     {
       "id": "resonance-audio",
       "name": "Resonance Audio",
-      "description": "Music states, ambient layers, sound cues, spatial audio intents, and adaptive soundtrack events.",
-      "category": "audio",
-      "version": "0.1.0",
-      "path": "modules/resonance-audio"
+      "version": "1.3.8",
+      "path": "modules/resonance-audio",
+      "engine_min": "1.3.8"
     },
     {
       "id": "relay-multiplayer",
       "name": "Relay Multiplayer",
-      "description": "Player sessions, authority rules, state deltas, turn synchronization, presence, and co-op primitives.",
-      "category": "multiplayer",
-      "version": "0.1.0",
-      "path": "modules/relay-multiplayer"
+      "version": "1.3.8",
+      "path": "modules/relay-multiplayer",
+      "engine_min": "1.3.8"
     },
     {
       "id": "oracle-director",
       "name": "Oracle Director",
-      "description": "AI game-master and narrative-director hooks for pacing, encounters, tension, goals, and adaptive story beats.",
-      "category": "director",
-      "version": "0.1.0",
-      "path": "modules/oracle-director"
+      "version": "1.3.8",
+      "path": "modules/oracle-director",
+      "engine_min": "1.3.8"
     },
     {
       "id": "keystone-physics",
       "name": "Keystone Physics",
-      "description": "Lightweight spatial rules, collision intents, movement costs, occupancy, ranges, and deterministic resolution.",
-      "category": "physics",
-      "version": "0.1.0",
-      "path": "modules/keystone-physics"
+      "version": "1.3.8",
+      "path": "modules/keystone-physics",
+      "engine_min": "1.3.8"
     },
     {
       "id": "spark-sdk",
-      "name": "Spark SDK",
-      "description": "Developer-facing module SDK, manifests, hooks, schemas, compatibility checks, examples, and module test harnesses.",
-      "category": "sdk",
-      "version": "0.1.0",
-      "path": "modules/spark-sdk"
+      "name": "Spark Sdk",
+      "version": "1.3.8",
+      "path": "modules/spark-sdk",
+      "engine_min": "1.3.8"
     }
   ]
 }

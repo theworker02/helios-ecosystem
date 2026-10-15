@@ -2,16 +2,19 @@
   "schema": "helios.module/v1",
   "id": "vitae-survival",
   "name": "Vitae Survival",
-  "version": "0.1.0",
-  "description": "Health, hunger, thirst, fatigue, temperature, disease, injury, recovery, and survival pressure.",
-  "category": "survival",
+  "version": "1.3.8",
+  "engine": {
+    "min": "1.3.8",
+    "max_major": 1
+  },
   "entrypoint": "module.py",
   "state_namespace": "vitae-survival",
-  "events": [
-    "helios.tick",
-    "entity.updated"
+  "lifecycle": [
+    "install",
+    "handle_event"
   ],
   "capabilities": [
-    "survival"
-  ]
+    "vitae"
+  ],
+  "status": "experimental"
 }

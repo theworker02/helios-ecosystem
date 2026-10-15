@@ -2,16 +2,19 @@
   "schema": "helios.module/v1",
   "id": "loom-quests",
   "name": "Loom Quests",
-  "version": "0.1.0",
-  "description": "Objectives, quest graphs, prerequisites, branching outcomes, rewards, and progression tracking.",
-  "category": "quests",
+  "version": "1.3.8",
+  "engine": {
+    "min": "1.3.8",
+    "max_major": 1
+  },
   "entrypoint": "module.py",
   "state_namespace": "loom-quests",
-  "events": [
-    "helios.tick",
-    "entity.updated"
+  "lifecycle": [
+    "install",
+    "handle_event"
   ],
   "capabilities": [
-    "quests"
-  ]
+    "loom"
+  ],
+  "status": "experimental"
 }

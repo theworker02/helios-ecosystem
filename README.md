@@ -1,74 +1,87 @@
-# Helios Ecosystem
+# Helios Ecosystem 1.3.8
 
 ![Helios](./assets/helios-logo.svg)
 
-**Helios is an AI-native mini game engine designed to be controlled conversationally and extended by agents.** This monorepo contains the Helios ChatGPT/MCP engine plus 20 first-party gameplay and developer modules.
+**Helios is an AI-native game engine built to be driven by ChatGPT, MCP agents, local clients, and conventional front ends.**
 
-Instead of making an LLM improvise an entire game as prose, Helios gives the conversation an explicit world model: entities, components, systems, events, rules, agents, turns, checkpoints, and portable state. Agents act through declared capabilities rather than receiving unrestricted control.
+Version **1.3.8** moves Helios well beyond a conversational state demo. The repository now contains a deterministic runtime with scenes, ECS-style entities/components, input frames, events, rules, agent capability gates, saves/checkpoints, 20 first-party modules, and a retro-FPS subsystem capable of building and playing **Doom-style** worlds.
+
+Helios does **not** redistribute Doom, proprietary WADs, textures, sounds, maps, or other copyrighted game data. The included WAD reader is for user-supplied files the user is legally entitled to use.
+
+## What Helios can do
+
+- Create and persist multiple game worlds.
+- Create scenes and spawn component-based entities.
+- Query and patch entity components.
+- Install first-party or community modules.
+- Advance deterministic simulation ticks.
+- Attach AI agents to entities with explicit action capabilities.
+- Give agents bounded observations instead of unrestricted world access.
+- Apply natural-language-authored structured rules.
+- Save, checkpoint, export and import worlds.
+- Create grid-based first-person levels and run collision-aware movement.
+- Ray-cast retro-FPS frames and render them as structured data or ASCII directly in chat.
+- Inspect classic Doom IWAD/PWAD directories and basic map geometry from user-supplied local files.
+- Expose the engine through MCP so ChatGPT can operate it through tools rather than merely improvising state.
+
+## Retro FPS quick example
+
+A map is intentionally simple:
+
+```text
+############
+#..........#
+#..###.....#
+#.....P....#
+#..........#
+############
+```
+
+ChatGPT can configure that as a world, apply player input, tick the simulation, and request a ray-cast frame. See [examples/retro-fps](./examples/retro-fps).
 
 ## Projects
 
 | Project | Purpose |
 |---|---|
-| **Helios Core** | Stateful AI-native mini game engine and ChatGPT/MCP integration. |
-| [Aether Agents](./modules/aether-agents) | Autonomous NPC brains with goals, memories, observations, capability-gated actions, and pluggable agent policies. |
-| [Echo Dialogue](./modules/echo-dialogue) | Branching and agent-driven dialogue, relationship context, conversation memory, and dialogue events. |
-| [Pulse Combat](./modules/pulse-combat) | Turn-based combat resolution with stats, damage types, status effects, targeting, and encounter hooks. |
-| [Vault Inventory](./modules/vault-inventory) | Items, containers, equipment slots, stack rules, ownership, transfers, loot, and inventories. |
-| [Forge Crafting](./modules/forge-crafting) | Recipes, ingredients, tools, stations, crafting queues, quality, and production events. |
-| [Loom Quests](./modules/loom-quests) | Objectives, quest graphs, prerequisites, branching outcomes, rewards, and progression tracking. |
-| [Bazaar Economy](./modules/bazaar-economy) | Currencies, shops, pricing, scarcity, trade, inventories, and configurable market simulation. |
-| [Faction Grid](./modules/faction-grid) | Factions, membership, reputation, diplomacy, hostility, alliances, territory claims, and social state. |
-| [Vitae Survival](./modules/vitae-survival) | Health, hunger, thirst, fatigue, temperature, disease, injury, recovery, and survival pressure. |
-| [Atlas Worlds](./modules/atlas-worlds) | World, region, scene, biome, location, travel, and procedural world-generation primitives. |
-| [Nimbus Weather](./modules/nimbus-weather) | Weather states, climate transitions, time-of-day modifiers, hazards, and environment events. |
-| [Drift Vehicles](./modules/drift-vehicles) | Vehicles, fuel, cargo, seats, durability, traversal costs, routes, and vehicle actions. |
-| [Hearth Building](./modules/hearth-building) | Construction, structures, rooms, placement, upgrades, utilities, ownership, and settlement state. |
-| [Chronicle State](./modules/chronicle-state) | Save games, checkpoints, snapshots, rollback-safe histories, migrations, and portable world persistence. |
-| [Spectra UI](./modules/spectra-ui) | Declarative HUDs, panels, menus, meters, interaction prompts, and renderer-neutral presentation schemas. |
-| [Resonance Audio](./modules/resonance-audio) | Music states, ambient layers, sound cues, spatial audio intents, and adaptive soundtrack events. |
-| [Relay Multiplayer](./modules/relay-multiplayer) | Player sessions, authority rules, state deltas, turn synchronization, presence, and co-op primitives. |
-| [Oracle Director](./modules/oracle-director) | AI game-master and narrative-director hooks for pacing, encounters, tension, goals, and adaptive story beats. |
-| [Keystone Physics](./modules/keystone-physics) | Lightweight spatial rules, collision intents, movement costs, occupancy, ranges, and deterministic resolution. |
-| [Spark SDK](./modules/spark-sdk) | Developer-facing module SDK, manifests, hooks, schemas, compatibility checks, examples, and module test harnesses. |
+| **Helios Core** | Deterministic runtime, MCP interface, saves, scenes, ECS-style entities, rules, agents, retro FPS and WAD inspection. |
+| **Aether Agents** | Autonomous NPC brains, goals, memories, observations and capability-gated actions. |
+| **Echo Dialogue** | Dialogue and conversation state. |
+| **Pulse Combat** | Combat resolution and encounter hooks. |
+| **Vault Inventory** | Items, equipment and containers. |
+| **Forge Crafting** | Recipes and production. |
+| **Loom Quests** | Objectives and quest graphs. |
+| **Bazaar Economy** | Currency, prices and trading. |
+| **Faction Grid** | Reputation, factions and diplomacy. |
+| **Vitae Survival** | Health and survival pressures. |
+| **Atlas Worlds** | Locations and world generation primitives. |
+| **Nimbus Weather** | Weather and environment events. |
+| **Drift Vehicles** | Vehicles and traversal. |
+| **Hearth Building** | Structures and settlements. |
+| **Chronicle State** | Persistence and state history. |
+| **Spectra UI** | Renderer-neutral HUD schemas. |
+| **Resonance Audio** | Adaptive audio intents. |
+| **Relay Multiplayer** | Session and synchronization primitives. |
+| **Oracle Director** | AI director/game-master hooks. |
+| **Keystone Physics** | Spatial and collision primitives. |
+| **Spark SDK** | Third-party module contract and tooling. |
 
-## Repository layout
+## Run tests
 
-```text
-core/helios-chatgpt/   ChatGPT/MCP Helios runtime
-modules/               20 first-party modules
-sdk/                   shared module API
-assets/                Helios brand assets
-registry.json          machine-readable module registry
-tests/                 ecosystem smoke tests
+```bash
+python -m pytest -q
 ```
 
-## Quick start
+## MCP server
 
 ```bash
 python core/helios-chatgpt/server/mcp_server.py
 ```
 
-For local module development, each folder under `modules/` contains a `module.json`, reference `module.py`, documentation, and a dedicated SVG logo.
+The MCP tool surface includes world/scene creation, entity operations, module installation, rules, input/ticking, agent attachment/observation/action, retro-FPS setup/rendering, saves and WAD inspection.
 
-Run the ecosystem tests with:
+## Reality check
 
-```bash
-python -m pytest tests core/helios-chatgpt/tests
-```
-
-## Design principles
-
-- **AI-native, not AI-dependent:** deterministic engine state remains authoritative.
-- **Capability-gated agents:** NPCs and external agents receive bounded observations/actions.
-- **Composable modules:** mechanics are isolated behind manifests and events.
-- **Portable worlds:** save/import without tying a game to one model vendor.
-- **Chat-first:** the engine can be driven naturally from ChatGPT or another MCP-capable client.
-- **Open ecosystem:** module manifests and runtime interfaces are designed for community extensions.
-
-## Status
-
-Helios is experimental (`0.x`). The engine is functional, while the 20 first-party modules currently provide the module contract, manifests, event integration, isolated state, and extensible reference implementations. Their deeper mechanics are intended to evolve independently without destabilizing the core runtime.
+Helios can now run a **Doom-like retro FPS simulation**, and it can inspect geometry from classic Doom-format WADs supplied by the user. It is not yet a drop-in replacement for a mature Doom source port: exact BSP rendering, texture composition, specials, full thinker/gameplay compatibility and original asset playback remain additional compatibility work.
 
 ## License
 
