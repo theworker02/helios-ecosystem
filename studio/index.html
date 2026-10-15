@@ -168,7 +168,7 @@ async function createGame(){
  try{
   const result=await api("/api/new",{name:$("project-name").value || "Untitled",genre:$("genre").value,
    seed:Number($("seed").value),width:Number($("width").value),height:Number($("height").value)});
-  worldId=result.world_id;await refresh();setStatus("World ready");
+  worldId=result.result.world_id;await refresh();setStatus("World ready");
  }catch(e){setStatus(e.message,true);}finally{busy=false;}
 }
 $("create").addEventListener("click",createGame);
