@@ -6,6 +6,20 @@
 
 v1.4.0 deepened Helios from a retro-FPS foundation into a playable game runtime: enemies, A* navigation, health/armor, ammo, hitscan combat, pickups, interactive doors, deterministic replay logs, HUD state, resource-pack manifests, scenes, ECS-style entities, agent capability gates, rules, checkpoints, and 20 first-party modules.
 
+## Install in ChatGPT Desktop (new)
+
+**Helios Game Studio is now packaged as a local desktop plugin**, including a self-contained Python MCP runtime, manifest, setup/game-building skills, icon, and a discoverable repository marketplace at `.agents/plugins/marketplace.json`. Python 3.10+ is required on the user's machine.
+
+To add the repository marketplace with the Codex CLI:
+
+```bash
+codex plugin marketplace add theworker02/helios-ecosystem
+```
+
+Restart ChatGPT Desktop, then open Plugins → **Magnexis Game Tools** → **Helios Game Studio** and install. Alternatively, open the cloned repository as a local project in a compatible desktop client. Start a new chat and ask Helios to create a game.
+
+See **[Desktop installation guide](docs/CHATGPT-DESKTOP.md)** for Windows/macOS interpreter setup, portability, packaging, and current availability restrictions. This local MCP plugin has not been publicly published or automatically installed in any ChatGPT account. The separate browser Studio is not yet an embedded ChatGPT widget.
+
 ## Helios Forge Studio (new in 1.5)
 
 Helios Forge adds a **multi-genre game-authoring and playing layer**, powered by the same deterministic Helios Core runtime. Available prototypes: \`roguelike\`, \`topdown\`, \`sandbox\` and \`platformer\`. Create seeded maps, paint tiles, place enemies/loot/dialogue NPCs/goals, fight, jump, collect, export/import and use MCP to control worlds.

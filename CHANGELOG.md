@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1 — Desktop plugin packaging
+- Add portable Agent Plugins package and bundled local Python MCP runtime.
+- Add repository marketplace entry for ChatGPT Desktop plugin discovery.
+- Include onboarding/game-builder skills, logo, plugin manifest and launch configuration.
+- Add offline ZIP builder with source snapshot integrity checks and MCP handshake tests.
+- Document installation and desktop-only limitations.
+
+
 ## 1.5.0
 - Helios Forge deterministic multi-genre project runtime: rogue-like, top-down, sandbox and platformer.
 - Procedural seeded connected rooms, edit brushes, interactive entity placement and JSON import/export.

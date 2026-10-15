@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "helios-game-engine",
+  "version": "1.5.1",
+  "description": "Create, develop, simulate and play games with Helios through ChatGPT Desktop.",
+  "author": {
+    "name": "Magnexis",
+    "url": "https://github.com/theworker02/helios-ecosystem"
+  },
+  "homepage": "https://github.com/theworker02/helios-ecosystem",
+  "repository": "https://github.com/theworker02/helios-ecosystem",
+  "license": "MIT",
+  "keywords": [
+    "games",
+    "mcp",
+    "simulation",
+    "game-engine",
+    "desktop"
+  ],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "interface": {
+        "displayName": "Helios Game Studio",
+        "shortDescription": "Build and play games in chat",
+        "longDescription": "Develop playable 2D roguelike, sandbox, platformer and top-down game prototypes, plus retro FPS levels and AI agent simulations. Tools run a bundled local Python MCP process. Requires Python 3.10+ on your computer. Does not provide an in-chat real-time 3D renderer.",
+        "developerName": "Magnexis",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Create and play games",
+          "Game map editing",
+          "Entity and NPC design",
+          "Save and replay simulation"
+        ],
+        "websiteURL": "https://github.com/theworker02/helios-ecosystem",
+        "brandColor": "#ED8C38",
+        "logo": "./assets/helios-logo.svg",
+        "composerIcon": "./assets/helios-logo.svg",
+        "defaultPrompt": [
+          "Create a procedural roguelike game using Helios.",
+          "Play a platformer in Helios and show the map.",
+          "Create a Doom-style level using Helios."
+        ]
+      }
+    }
+  }
+}
