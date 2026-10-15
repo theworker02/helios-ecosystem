@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "atlas-worlds",
+  "name": "Atlas Worlds",
+  "version": "0.1.0",
+  "description": "World, region, scene, biome, location, travel, and procedural world-generation primitives.",
+  "category": "worlds",
+  "entrypoint": "module.py",
+  "state_namespace": "atlas-worlds",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "worlds"
+  ]
+}
