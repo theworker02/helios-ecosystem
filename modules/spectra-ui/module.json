@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "spectra-ui",
+  "name": "Spectra UI",
+  "version": "0.1.0",
+  "description": "Declarative HUDs, panels, menus, meters, interaction prompts, and renderer-neutral presentation schemas.",
+  "category": "ui",
+  "entrypoint": "module.py",
+  "state_namespace": "spectra-ui",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "ui"
+  ]
+}
