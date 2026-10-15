@@ -13,12 +13,12 @@ MAP="""#######
 def test_world_entity_scene_and_save():
     e=HeliosEngine()
     w=e.create_world("test")
-    assert w["engine_version"]=="1.4.0"
+    assert w["engine_version"]==ENGINE_VERSION
     e.spawn_entity(w["id"],"crate",{"transform":{"x":2,"y":2}},["prop"])
     assert e.query_entities(w["id"],component="transform")[0]["id"]=="crate"
     e.checkpoint(w["id"],"a")
     payload=e.export_world(w["id"])
-    assert '"engine_version":"1.4.0"' in payload
+    assert '"engine_version":ENGINE_VERSION' in payload
 
 def test_retro_fps_tick_and_frame():
     e=HeliosEngine(); w=e.create_world("fps",mode="retro_fps")
