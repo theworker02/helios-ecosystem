@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "forge-crafting",
+  "name": "Forge Crafting",
+  "version": "0.1.0",
+  "description": "Recipes, ingredients, tools, stations, crafting queues, quality, and production events.",
+  "category": "crafting",
+  "entrypoint": "module.py",
+  "state_namespace": "forge-crafting",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "crafting"
+  ]
+}
