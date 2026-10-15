@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "oracle-director",
+  "name": "Oracle Director",
+  "version": "0.1.0",
+  "description": "AI game-master and narrative-director hooks for pacing, encounters, tension, goals, and adaptive story beats.",
+  "category": "director",
+  "entrypoint": "module.py",
+  "state_namespace": "oracle-director",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "director"
+  ]
+}
