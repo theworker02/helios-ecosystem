@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "aether-agents",
+  "name": "Aether Agents",
+  "version": "0.1.0",
+  "description": "Autonomous NPC brains with goals, memories, observations, capability-gated actions, and pluggable agent policies.",
+  "category": "agent",
+  "entrypoint": "module.py",
+  "state_namespace": "aether-agents",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "agent"
+  ]
+}
