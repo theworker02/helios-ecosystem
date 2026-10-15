@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "pulse-combat",
+  "name": "Pulse Combat",
+  "version": "0.1.0",
+  "description": "Turn-based combat resolution with stats, damage types, status effects, targeting, and encounter hooks.",
+  "category": "combat",
+  "entrypoint": "module.py",
+  "state_namespace": "pulse-combat",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "combat"
+  ]
+}
