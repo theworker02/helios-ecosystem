@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "drift-vehicles",
+  "name": "Drift Vehicles",
+  "version": "0.1.0",
+  "description": "Vehicles, fuel, cargo, seats, durability, traversal costs, routes, and vehicle actions.",
+  "category": "vehicles",
+  "entrypoint": "module.py",
+  "state_namespace": "drift-vehicles",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "vehicles"
+  ]
+}
