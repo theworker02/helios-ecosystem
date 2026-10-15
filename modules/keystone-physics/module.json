@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "keystone-physics",
+  "name": "Keystone Physics",
+  "version": "0.1.0",
+  "description": "Lightweight spatial rules, collision intents, movement costs, occupancy, ranges, and deterministic resolution.",
+  "category": "physics",
+  "entrypoint": "module.py",
+  "state_namespace": "keystone-physics",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "physics"
+  ]
+}
