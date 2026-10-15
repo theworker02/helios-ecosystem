@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "chronicle-state",
+  "name": "Chronicle State",
+  "version": "0.1.0",
+  "description": "Save games, checkpoints, snapshots, rollback-safe histories, migrations, and portable world persistence.",
+  "category": "state",
+  "entrypoint": "module.py",
+  "state_namespace": "chronicle-state",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "state"
+  ]
+}
