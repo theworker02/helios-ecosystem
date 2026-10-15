@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "spark-sdk",
+  "name": "Spark SDK",
+  "version": "0.1.0",
+  "description": "Developer-facing module SDK, manifests, hooks, schemas, compatibility checks, examples, and module test harnesses.",
+  "category": "sdk",
+  "entrypoint": "module.py",
+  "state_namespace": "spark-sdk",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "sdk"
+  ]
+}
