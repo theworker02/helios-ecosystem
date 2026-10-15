@@ -1,4 +1,4 @@
-import pathlib, sys
+import pathlib, sys, json
 SERVER=pathlib.Path(__file__).parents[1]/"core"/"helios-chatgpt"/"server"
 sys.path.insert(0,str(SERVER))
 from engine import HeliosEngine, ENGINE_VERSION
@@ -18,7 +18,7 @@ def test_world_entity_scene_and_save():
     assert e.query_entities(w["id"],component="transform")[0]["id"]=="crate"
     e.checkpoint(w["id"],"a")
     payload=e.export_world(w["id"])
-    assert '"engine_version":ENGINE_VERSION' in payload
+    assert json.loads(payload)["engine_version"] == ENGINE_VERSION
 
 def test_retro_fps_tick_and_frame():
     e=HeliosEngine(); w=e.create_world("fps",mode="retro_fps")
