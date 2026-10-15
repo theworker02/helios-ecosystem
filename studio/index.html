@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helios Forge Studio</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#070b14;color:#e8eeff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 70% 0,#14233d,transparent 55%),#070b14}
+header{height:auto;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid #263348;background:#0b101bdc}
+.brand{display:flex;gap:12px;align-items:center;font-weight:800;font-size:21px;letter-spacing:.015em}
+.logo{display:grid;place-items:center;background:linear-gradient(130deg,#fc9b42,#da4bed);border-radius:12px;width:39px;height:39px;color:#10101b;font-size:25px}
+.tag{display:block;font-size:11px;color:#9daec9;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.layout{display:grid;grid-template-columns:280px minmax(340px,1fr) 270px;max-width:1650px;margin:auto;gap:14px;padding:18px}
+.panel{background:#101827de;border:1px solid #263249;border-radius:15px;padding:16px;min-width:0}
+h2{font-size:14px;font-weight:750;margin:0 0 14px;color:#f1f5ff}
+label{display:block;margin:12px 0 5px;font-size:12px;color:#a9b9d3;font-weight:650}
+input,select,button{font:inherit}
+input,select{width:100%;background:#0a1220;border:1px solid #344258;border-radius:9px;color:#eff6ff;padding:9px}
+button{padding:10px 12px;border:1px solid #31435d;color:#eaf2ff;background:#1a293c;border-radius:9px;cursor:pointer}
+button:hover{background:#263c56}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #80bcf8;outline-offset:2px}
+.primary{background:linear-gradient(105deg,#e17d31,#cf466f);border:0;font-weight:800;color:white}
+.primary:hover{filter:brightness(1.15)}
+.full{width:100%;margin-top:14px}.secondary{background:#172333}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stage{display:flex;flex-direction:column;gap:12px}
+.stage-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.small{font-size:12px;color:#91a8c6}.stage-heading{font-size:19px;font-weight:750}
+.world{border:1px solid #36455d;border-radius:13px;background:#071020;overflow:auto;min-height:350px;max-height:70vh;display:flex;align-items:flex-start;justify-content:flex-start}
+canvas{display:block;image-rendering:pixelated;max-width:none;cursor:crosshair}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stat{background:#111d2e;border:1px solid #263951;border-radius:10px;padding:12px;min-width:0}
+.stat .value{font-size:22px;font-weight:850}.stat .sub{font-size:11px;color:#8fa6c6;text-transform:uppercase}
+.controls{display:grid;grid-template-columns:repeat(3,51px);gap:7px;justify-content:center}
+.control{height:47px;font-size:18px;font-weight:700;padding:0}
+.control.attack{font-size:12px;background:#5b253d}
+.note{font-size:12px;line-height:1.6;color:#94aac6}
+.divider{margin:18px 0;border:0;border-top:1px solid #26344c}
+.log{font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:#c6d4e7;max-height:200px;overflow:auto;white-space:pre-wrap}
+.badge{display:inline-block;background:#213652;border:1px solid #375579;color:#b9d6ff;border-radius:40px;padding:4px 9px;font-size:11px}
+footer{text-align:center;color:#7185a5;font-size:12px;padding:7px 18px 25px}
+#status{font-size:12px;color:#a8bddc}#status.error{color:#ff999e}
+@media(max-width:1040px){.layout{grid-template-columns:230px 1fr}.right{grid-column:1/-1}.panel.right{display:grid;grid-template-columns:1fr 1fr;gap:15px}.right h2{grid-column:1/-1}}
+@media(max-width:700px){header{padding:12px}.layout{display:flex;flex-direction:column;padding:12px}.panel.right{display:block}.world{max-height:50vh}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><span class="logo">✦</span><div>Helios Forge <span class="tag">AI-native game development studio · v1.5</span></div></div>
+ <span class="badge">Local deterministic engine</span>
+</header>
+<main class="layout">
+<aside class="panel">
+ <h2>Game project</h2>
+ <label for="project-name">Project name</label>
+ <input id="project-name" value="My Helios World" maxlength="80">
+ <label for="genre">Genre</label>
+ <select id="genre"><option value="roguelike">Roguelike / dungeon</option><option value="topdown">Top-down adventure</option><option value="sandbox">Creative sandbox</option><option value="platformer">Platformer</option></select>
+ <label for="seed">World seed</label><input id="seed" type="number" value="42" step="1">
+ <div class="pair">
+  <div><label for="width">Width</label><input id="width" type="number" min="8" max="64" value="24"></div>
+  <div><label for="height">Height</label><input id="height" type="number" min="8" max="40" value="16"></div>
+ </div>
+ <button id="create" class="primary full">Create game</button>
+ <hr class="divider">
+ <h2>Level editor</h2>
+ <label for="brush">Brush / object</label>
+ <select id="brush">
+  <option value="inspect">Inspect only</option>
+  <optgroup label="Tiles"><option value="#">Wall</option><option value=".">Floor</option><option value="^">Hazard</option></optgroup>
+  <optgroup label="Actors"><option value="enemy">Enemy</option><option value="loot">Loot</option><option value="goal">Goal / exit</option><option value="npc">NPC / dialogue</option></optgroup>
+ </select>
+ <p class="note">Choose a brush and click a tile on the map. Changes run through the same authoritative Python engine used by Helios MCP.</p>
+ <div class="pair"><button id="export">Export .json</button><button id="import">Import .json</button></div>
+ <input id="upload" type="file" accept=".json,application/json" hidden>
+</aside>
+<section class="stage">
+ <div class="stage-head"><div><div class="stage-heading" id="title">My Helios World</div><span class="small" id="subtitle">Create a project to begin</span></div><span id="status">Ready</span></div>
+ <div class="stats">
+  <div class="stat"><div class="value" id="health">100</div><div class="sub">Health</div></div>
+  <div class="stat"><div class="value" id="score">0</div><div class="sub">Score</div></div>
+  <div class="stat"><div class="value" id="turn">0</div><div class="sub">Ticks</div></div>
+  <div class="stat"><div class="value" id="actors">0</div><div class="sub">Actors</div></div>
+ </div>
+ <div class="world"><canvas id="board" width="720" height="480" role="img" aria-label="Helios playable level map">Your browser must support Canvas 2D.</canvas></div>
+ <p class="note" id="help">Click New Game, then use the movement controls or keyboard. This view displays actual Helios runtime state.</p>
+</section>
+<aside class="panel right">
+ <h2>Player controls</h2>
+ <div>
+  <div class="controls">
+   <span></span><button class="control" data-action="north" aria-label="Up">↑</button><span></span>
+   <button class="control" data-action="west" aria-label="Left">←</button><button class="control attack" data-action="attack">Attack</button><button class="control" data-action="east" aria-label="Right">→</button>
+   <span></span><button class="control" data-action="south" aria-label="Down">↓</button><span></span>
+  </div>
+  <div class="pair" style="margin-top:10px"><button id="jump">Jump / Space</button><button id="wait">Wait / Stop</button></div>
+  <p class="note">Top-down: WASD / arrow keys to move, Space to attack. Platformer: A/D or arrows to run, Space to jump. Gravity advances continuously in play mode.</p>
+ </div>
+ <div>
+  <hr class="divider">
+  <h2>Game events</h2>
+  <div class="log" id="log" aria-live="polite">No events yet.</div>
+  <hr class="divider">
+  <h2>Session</h2>
+  <p class="note">The authoritative world lives in the running local server. Export to persist a portable game project before shutting down the server.</p>
+ </div>
+</aside>
+</main>
+<footer>Helios Forge Studio · local-first reference client · no external dependencies · not a hosted multiplayer service</footer>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const board = $("board"), ctx = board.getContext("2d");
+let worldId = null, state = null, busy = false, actorCounter = 0, keyboard = new Set();
+const CELL = 30;
+const PALETTE = {wall:"#37465d",floor:"#142239",hazard:"#822b36",enemy:"#f36678",loot:"#ffd36e",goal:"#69d2b1",npc:"#a0adff"};
+const setStatus = (message, bad=false) => { $("status").textContent = message; $("status").className = bad ? "error" : ""; };
+const api = async (path, data, method="POST") => {
+ const response = await fetch(path, {method, headers:method==="POST"?{"Content-Type":"application/json"}:{},
+  body: method==="POST"?JSON.stringify(data):undefined, cache:"no-store"});
+ const result = await response.json();
+ if (!response.ok) throw new Error(result.error || "HTTP "+response.status);
+ return result;
+};
+function paint(){
+ if(!state) return;
+ const game = state.world.forge, view = state.view;
+ board.width = game.width*CELL; board.height = game.height*CELL;
+ const symbols = {enemy:"E",loot:"$",goal:"X",npc:"N"};
+ for(let y=0;y<game.height;y++) for(let x=0;x<game.width;x++){
+  const tile=game.tiles[y][x], px=x*CELL,py=y*CELL;
+  ctx.fillStyle=tile==="#"?PALETTE.wall:tile==="^"?PALETTE.hazard:PALETTE.floor;
+  ctx.fillRect(px,py,CELL,CELL);
+  if(tile==="#"){
+   ctx.fillStyle="#4d6485";ctx.fillRect(px+2,py+2,CELL-4,4);
+  } else if(tile==="^"){
+   ctx.fillStyle="#ffc4aa";ctx.font="20px monospace";ctx.fillText("▲",px+5,py+22);
+  }
+  ctx.strokeStyle="#21314b";ctx.strokeRect(px+.5,py+.5,CELL,CELL);
+ }
+ for(const actor of game.actors){
+  if(!actor.active)continue;
+  const px=(actor.x+.5)*CELL,py=(actor.y+.5)*CELL;
+  ctx.beginPath();ctx.arc(px,py,11,0,Math.PI*2);ctx.fillStyle=PALETTE[actor.kind];ctx.fill();
+  ctx.font="bold 15px monospace";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#102031";ctx.fillText(symbols[actor.kind],px,py);
+ }
+ const p=game.player, px=(p.x+.5)*CELL, py=(p.y+.5)*CELL;
+ ctx.fillStyle="#7ac4ff";ctx.shadowBlur=12;ctx.shadowColor="#399cff";ctx.beginPath();ctx.arc(px,py,12,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+ ctx.fillStyle="#07233a";ctx.font="bold 17px monospace";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("@",px,py);
+ $("health").textContent=Math.round(p.health);$("score").textContent=p.score;$("turn").textContent=game.turn;
+ $("actors").textContent=game.actors.filter(a=>a.active).length;
+ $("title").textContent=game.name;$("subtitle").textContent=game.genre+" · "+game.width+"×"+game.height+" · seed "+game.seed;
+ $("help").textContent=game.completed?"Goal reached! Export your game or create another.":p.health<=0?"Game over. Create or load a game.":"Playing "+game.genre+" · use controls or edit tiles on the map.";
+ $("log").textContent=game.events.slice(-10).reverse().map(e=>"["+e.type+"] "+(e.id||e.text||"")).join("\n") || "No events yet.";
+}
+async function refresh(){
+ if(!worldId)return;
+ const output=await api("/api/world?world_id="+encodeURIComponent(worldId),null,"GET");
+ state=output;paint();
+}
+async function command(path, value){
+ if(!worldId||busy)return;
+ busy=true;try{await api(path,{world_id:worldId,...value});await refresh();setStatus("Synced");}catch(e){setStatus(e.message,true);}finally{busy=false;}
+}
+async function createGame(){
+ if(busy)return;busy=true;setStatus("Creating...");
+ try{
+  const result=await api("/api/new",{name:$("project-name").value || "Untitled",genre:$("genre").value,
+   seed:Number($("seed").value),width:Number($("width").value),height:Number($("height").value)});
+  worldId=result.world_id;await refresh();setStatus("World ready");
+ }catch(e){setStatus(e.message,true);}finally{busy=false;}
+}
+$("create").addEventListener("click",createGame);
+board.addEventListener("click",async ev=>{
+ if(!state)return;
+ const rect=board.getBoundingClientRect();
+ const x=Math.floor((ev.clientX-rect.left)*board.width/rect.width/CELL);
+ const y=Math.floor((ev.clientY-rect.top)*board.height/rect.height/CELL);
+ const brush=$("brush").value;
+ if(brush==="inspect"){setStatus("Tile "+x+","+y);return;}
+ if(["#",".","^"].includes(brush))return command("/api/edit",{x,y,tile:brush});
+ const actor_id=brush+"_"+(++actorCounter)+"_"+Date.now().toString(36);
+ const dialogue=brush==="npc"?prompt("NPC dialogue (optional):","Welcome to Helios!")||"":"";
+ await command("/api/place",{x,y,actor_id,kind:brush,dialogue});
+});
+const move = async action => {
+ if(!state||busy)return;
+ const platformer=state.world.forge.genre==="platformer";
+ const mapping={north:"jump",south:"wait",east:"right",west:"left",attack:"jump",wait:"wait"};
+ await command("/api/play",{action:platformer?mapping[action]:action,frames:platformer?5:1});
+};
+for(const button of document.querySelectorAll("[data-action]"))button.addEventListener("click",()=>move(button.dataset.action));
+$("jump").addEventListener("click",()=>move("attack"));
+$("wait").addEventListener("click",()=>move("wait"));
+document.addEventListener("keydown",ev=>{
+ if(["INPUT","SELECT","TEXTAREA"].includes(ev.target.tagName))return;
+ const k=ev.key.toLowerCase();
+ if(!["arrowup","arrowdown","arrowleft","arrowright","w","a","s","d"," "].includes(k))return;
+ ev.preventDefault();keyboard.add(k);
+ if(!state||state.world.forge.genre==="platformer"||ev.repeat)return;
+ const map={"arrowup":"north",w:"north","arrowdown":"south",s:"south","arrowleft":"west",a:"west","arrowright":"east",d:"east"," ":"attack"};
+ move(map[k]);
+});
+document.addEventListener("keyup",ev=>keyboard.delete(ev.key.toLowerCase()));
+window.addEventListener("blur",()=>keyboard.clear());
+setInterval(()=>{
+ if(!state||busy||state.world.forge.genre!=="platformer"||state.world.forge.completed||state.world.forge.player.health<=0)return;
+ const left=keyboard.has("a")||keyboard.has("arrowleft");
+ const right=keyboard.has("d")||keyboard.has("arrowright");
+ const jump=keyboard.has(" ")||keyboard.has("w")||keyboard.has("arrowup");
+ let action=left!==right?(left?"left":"right"):"wait";
+ if(jump)action=action==="wait"?"jump":action+"+jump";
+ command("/api/play",{action,frames:4});
+},100);
+$("export").addEventListener("click",async()=>{
+ if(!worldId)return;
+ try{
+  const response=await api("/api/export",{world_id:worldId});
+  const blob=new Blob([response.result.json],{type:"application/json"});
+  const url=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=url;anchor.download="helios-forge-game.json";anchor.click();
+  URL.revokeObjectURL(url);setStatus("Exported");
+ }catch(e){setStatus(e.message,true);}
+});
+$("import").addEventListener("click",()=>$("upload").click());
+$("upload").addEventListener("change",async ev=>{
+ const file=ev.target.files[0];if(!file)return;
+ if(file.size>450000){setStatus("Project exceeds import limit",true);return;}
+ try{
+  if(!worldId)await createGame();
+  if(!worldId)throw new Error("No world available");
+  await command("/api/import",{json:await file.text()});
+ }catch(e){setStatus(e.message,true);}
+ ev.target.value="";
+});
+createGame();
+</script>
+</body>
+</html>
