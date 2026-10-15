@@ -51,7 +51,7 @@ def test_studio_page_and_live_creation(studio):
     status, result = request("POST", "/api/new", {"name": "integration", "genre": "sandbox",
                                                  "seed": 5, "width": 14, "height": 10})
     assert status == 200
-    world_id = result["world_id"]
+    world_id = result["result"]["world_id"]
     status, snapshot = request("GET", f"/api/world?world_id={world_id}")
     assert status == 200
     assert snapshot["view"]["hud"]["genre"] == "sandbox"
@@ -72,7 +72,7 @@ def test_studio_rejects_cross_origin_and_bad_requests(studio):
     assert status == 403
     status, result = request("POST", "/api/new", {"name": "safe"},
                              {"Origin": f"http://127.0.0.1:{port}"})
-    assert status == 200 and result["world_id"]
+    assert status == 200 and result["result"]["world_id"]
     status, bad = request("POST", "/api/new", {"name": "bad", "genre": "unrecognized"})
     assert status == 400
     status, missing = request("GET", "/api/nonexistent")
