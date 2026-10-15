@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "faction-grid",
+  "name": "Faction Grid",
+  "version": "0.1.0",
+  "description": "Factions, membership, reputation, diplomacy, hostility, alliances, territory claims, and social state.",
+  "category": "factions",
+  "entrypoint": "module.py",
+  "state_namespace": "faction-grid",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "factions"
+  ]
+}
