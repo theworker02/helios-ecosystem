@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "helios": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "-u",
+        "${PLUGIN_ROOT}/server/mcp_server.py"
+      ],
+      "cwd": "${PLUGIN_ROOT}"
+    }
+  }
+}
