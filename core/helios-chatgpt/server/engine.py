@@ -11,8 +11,9 @@ from rng import DeterministicRng
 from replay import ReplayLog
 from gameplay import GameplaySystem
 from resources import ResourcePack
+from forge import ForgeStudio
 
-ENGINE_VERSION = "1.4.0"
+ENGINE_VERSION = "1.5.0"
 
 class HeliosEngine:
     def __init__(self, seed=0):
@@ -28,7 +29,7 @@ class HeliosEngine:
         w={"engine_version":ENGINE_VERSION,"id":wid,"name":name,"description":description,"mode":mode,
            "tick":0,"time":0.0,"fixed_dt":1/20,"entities":{},"scenes":{},"active_scene":None,
            "modules":{},"events":[],"rules":[],"agents":{},"state":{},"input":{},"retro_fps":None,
-           "doors":{},"resources":[],"rng":self.rng.state()}
+           "doors":{},"resources":[],"rng":self.rng.state(),"forge":None}
         self.worlds[wid]=w; self.replays[wid]=ReplayLog(); self.create_scene(wid,"main","Main")
         return self.get_world(wid)
 
@@ -130,9 +131,53 @@ class HeliosEngine:
         if typ in ("move","turn"): self.apply_input(wid,entity_id,{"forward":action.get("forward",0),"strafe":action.get("strafe",0),"turn":action.get("turn",0)})
         elif typ=="attack" and entity_id==(w.get("retro_fps") or {}).get("player"): self.fire_weapon(wid)
         elif typ=="interact" and entity_id==(w.get("retro_fps") or {}).get("player"): self.interact(wid)
+        elif typ=="forge": self.forge_play(wid,action["command"],action.get("frames",1))
         self.emit(wid,"agent.action",{"agent_id":agent_id,"entity_id":entity_id,"action":copy.deepcopy(action)},source=agent_id)
         self.replays.setdefault(wid,ReplayLog()).record(w["tick"],"agent_action",{"agent_id":agent_id,"action":copy.deepcopy(action)})
         return {"accepted":True,"entity_id":entity_id,"action":copy.deepcopy(action)}
+
+
+    # Forge project tools use the same Helios world, snapshots, checkpoints,
+    # event rules and capability-gated agent boundary as the FPS runtime.
+    def forge_new(self,wid,name,genre="roguelike",seed=0,width=24,height=16):
+        w=self._world(wid)
+        w["forge"]=ForgeStudio.create(name,genre,seed,width,height)
+        self.emit(wid,"forge.created",{"genre":genre,"name":name})
+        return self.forge_render(wid)
+
+    def _forge(self,wid):
+        project=self._world(wid).get("forge")
+        if project is None: raise ValueError("Forge is not configured")
+        return project
+
+    def forge_edit(self,wid,x,y,tile):
+        result=ForgeStudio.edit(self._forge(wid),x,y,tile)
+        self.emit(wid,"forge.tile_edited",result)
+        return result
+
+    def forge_place(self,wid,actor_id,kind,x,y,hp=35,value=10,dialogue=""):
+        result=ForgeStudio.place(self._forge(wid),actor_id,kind,x,y,hp,value,dialogue)
+        self.emit(wid,"forge.actor_placed",result)
+        return result
+
+    def forge_play(self,wid,action,frames=1):
+        result=ForgeStudio.play(self._forge(wid),action,frames)
+        self.replays.setdefault(wid,ReplayLog()).record(self._world(wid)["tick"],"forge.action",{"action":action,"frames":frames})
+        for event in result.get("events",[]):
+            self.emit(wid,"forge."+event["type"],event)
+        return result
+
+    def forge_render(self,wid):
+        return ForgeStudio.render(self._forge(wid))
+
+    def forge_export(self,wid):
+        return ForgeStudio.export(self._forge(wid))
+
+    def forge_import(self,wid,payload):
+        project=ForgeStudio.import_project(payload)
+        self._world(wid)["forge"]=project
+        self.emit(wid,"forge.imported",{"name":project["name"],"genre":project["genre"]})
+        return self.forge_render(wid)
 
     def checkpoint(self,wid,name): return self.saves.create(self._world(wid),name)
     def restore_checkpoint(self,wid,name): self.worlds[wid]=self.saves.restore(wid,name); return self.get_world(wid)
