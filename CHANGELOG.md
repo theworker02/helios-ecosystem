@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0
+- Helios Forge deterministic multi-genre project runtime: rogue-like, top-down, sandbox and platformer.
+- Procedural seeded connected rooms, edit brushes, interactive entity placement and JSON import/export.
+- Platformer gravity/jump/collision and turn-based navigation, health, combat, loot, NPC dialogue, goals.
+- Seven new MCP tools for game authoring, editing, play and game project portability.
+- AI agent capability gate for Forge action execution.
+- Local browser Studio with HTML5 Canvas maps, keyboard controls, editing, and project export.
+- Loopback HTTP bridge and integration/security regression tests.
+- Existing FPS and 20 modules remain available.
+
+
 ## 1.4.0
 - Deterministic RNG.
 - A* pathfinding and line-of-sight.
