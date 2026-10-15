@@ -123,3 +123,23 @@ def test_agent_forge_capability_gate():
         e.agent_act(wid, "forbidden", {"type": "forge", "command": "north"})
     e.attach_agent(wid, "permitted", "bot", ["forge"])
     assert e.agent_act(wid, "permitted", {"type": "forge", "command": "wait"})["accepted"]
+
+
+
+@pytest.mark.parametrize("corruption", ["turn", "velocity", "actor", "events", "inventory", "health"])
+def test_forge_import_rejects_incomplete_or_hostile_state(corruption):
+    project = ForgeStudio.create("guard", "roguelike", width=14, height=10)
+    if corruption == "turn":
+        project["turn"] = "bad"
+    elif corruption == "velocity":
+        project["player"]["vy"] = float("inf")
+    elif corruption == "actor":
+        project["actors"][0].pop("active")
+    elif corruption == "events":
+        project["events"] = [{"type": 31}]
+    elif corruption == "inventory":
+        project["player"]["inventory"] = {"untrusted": True}
+    elif corruption == "health":
+        project["player"]["health"] = -2
+    with pytest.raises(ValueError):
+        ForgeStudio.import_project(json.dumps(project))
