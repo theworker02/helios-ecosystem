@@ -1,0 +1,17 @@
+{
+  "schema": "helios.module/v1",
+  "id": "bazaar-economy",
+  "name": "Bazaar Economy",
+  "version": "0.1.0",
+  "description": "Currencies, shops, pricing, scarcity, trade, inventories, and configurable market simulation.",
+  "category": "economy",
+  "entrypoint": "module.py",
+  "state_namespace": "bazaar-economy",
+  "events": [
+    "helios.tick",
+    "entity.updated"
+  ],
+  "capabilities": [
+    "economy"
+  ]
+}
